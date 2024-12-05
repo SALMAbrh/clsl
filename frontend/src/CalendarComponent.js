@@ -5,7 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 
 const CLIENT_ID = "16844726883-nktuvt7v0fvoua9h948nvvl5ljddau9p.apps.googleusercontent.com";
-const SCOPES = "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar";
+const SCOPES = ["https://www.googleapis.com/auth/calendar.events, https://www.googleapis.com/auth/calendar"];
 
 function CalendarComponent() {
   const [events, setEvents] = useState([]);
