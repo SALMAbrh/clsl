@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '20' # Ensure compatibility with your project
           cache: 'npm' # Cache dependencies for faster builds
-
+          cache-dependency-path: ./frontend/package-lock.json
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
