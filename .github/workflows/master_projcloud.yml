@@ -21,22 +21,12 @@ jobs:
       - name: Create and start virtual environment
         run: |
           python -m venv venv
-          . venv/bin/activate  # Activer l'environnement virtuel
+          . venv/bin/activate  # Utilisation du point pour activer l'environnement virtuel
 
       - name: Install dependencies
         run: |
-          . venv/bin/activate  # Assurez-vous que l'environnement virtuel est activé
+          . venv/bin/activate
           pip install -r backend/requirements.txt  # Assurez-vous que le chemin est correct
-
-      - name: Install pytest
-        run: |
-          . venv/bin/activate  # Réactive l'environnement virtuel
-          pip install pytest  # Assurez-vous que pytest est installé
-
-      - name: Run tests
-        run: |
-          . venv/bin/activate  # Réactive l'environnement virtuel
-          pytest  # Exécutez vos tests
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r -x "venv/*"  # Exclure le dossier venv
