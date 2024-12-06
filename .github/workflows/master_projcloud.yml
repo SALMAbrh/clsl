@@ -24,9 +24,15 @@ jobs:
           . venv/bin/activate  # Utilisation du point pour activer l'environnement virtuel
 
       - name: Install dependencies
-        run: pip install -r backend/requirements.txt  # Assurez-vous que le chemin est correct
+        run: |
+          . venv/bin/activate
+          pip install -r backend/requirements.txt  # Assurez-vous que le chemin est correct
 
-      # Optionnel : Ajouter une étape pour exécuter des tests
+      - name: Install pytest
+        run: |
+          . venv/bin/activate
+          pip install pytest  # Assurez-vous que pytest est installé
+
       - name: Run tests
         run: |
           . venv/bin/activate
