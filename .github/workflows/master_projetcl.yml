@@ -1,8 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
-name: Build and deploy Python app to Azure Web App - projetcl
+name: Build and deploy Python app to Azure Web App - projcloud
 
 on:
   push:
@@ -25,15 +21,15 @@ jobs:
       - name: Create and start virtual environment
         run: |
           python -m venv venv
-          source venv/bin/activate
-      
+          . venv/bin/activate  # Utilisation du point pour activer l'environnement virtuel
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+        run: |
+          . venv/bin/activate
+          pip install -r backend/requirements.txt  # Assurez-vous que le chemin est correct
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip release.zip ./* -r -x "venv/*"  # Exclure le dossier venv
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -50,7 +46,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write  # Ceci est requis pour demander le JWT
 
     steps:
       - name: Download artifact from build job
@@ -61,18 +57,16 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_776DECC24A4F46CD8FBDAC79AA894D7A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C31E2B3FCDEF4CEBB8811E8D41CF5268 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0742AF3546924979A447A583AFB21488 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_68CF53B7F49E46CE8B3932358600115D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B17337A979304EC2BBC1E79A094BA6B3 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_208C2251B9374253BCA769959DC7E62E }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'projetcl'
+          app-name: 'projcloud'
           slot-name: 'Production'
-          
